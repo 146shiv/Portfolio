@@ -45,37 +45,37 @@ const Projects = () => {
 
                 {/* Slider container – one card visible at a time; touch swipe on mobile */}
                 <div
-                    className="relative overflow-hidden touch-pan-y"
+                    className="relative overflow-hidden touch-pan-y w-full"
                     onTouchStart={handleTouchStart}
                     onTouchEnd={handleTouchEnd}
                 >
                     <div
                         className="flex transition-transform duration-500 ease-out"
-                        style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+                        style={{ width: `${PROJECTS.length * 100}%`, transform: `translateX(-${(activeIndex * 100) / PROJECTS.length}%)` }}
                     >
                         {PROJECTS.map((project) => (
-                            <div key={project.id} className="w-full flex-shrink-0 px-1">
-                                <div className="bg-slate-800/40 backdrop-blur-sm border border-slate-700/50 rounded-2xl overflow-hidden hover:bg-slate-800/60 transition-all duration-300 group">
-                                    <div className="md:flex">
-                                        <div className="md:w-1/2 bg-slate-900/50 min-h-[250px] relative overflow-hidden">
+                            <div key={project.id} className="flex-shrink-0 px-1" style={{ width: `${100 / PROJECTS.length}%` }}>
+                                <div className="bg-slate-800/40 backdrop-blur-sm border border-slate-700/50 rounded-2xl overflow-hidden hover:bg-slate-800/60 transition-all duration-300 group min-h-[480px] md:min-h-0 flex flex-col">
+                                    <div className="md:flex flex-1 min-h-0">
+                                        <div className="w-full md:w-1/2 bg-slate-900/50 h-[180px] md:h-auto md:min-h-[250px] flex-shrink-0 relative overflow-hidden">
                                             <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient || 'from-indigo-900/40 to-slate-900'} flex items-center justify-center group-hover:scale-105 transition-transform duration-700`}>
-                                                <span className="text-slate-600 font-bold text-4xl opacity-20 transform -rotate-12">{project.placeholderLabel || project.title}</span>
+                                                <span className="text-slate-600 font-bold text-3xl sm:text-4xl opacity-20 transform -rotate-12">{project.placeholderLabel || project.title}</span>
                                             </div>
                                         </div>
-                                        <div className="p-8 md:w-1/2 flex flex-col justify-center">
-                                            <h3 className="text-2xl font-bold text-white mb-3">{project.title}</h3>
-                                            <p className="text-slate-400 mb-6">{project.description}</p>
+                                        <div className="p-5 sm:p-6 md:p-8 md:w-1/2 flex flex-col justify-center flex-1 min-h-0">
+                                            <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3 line-clamp-2">{project.title}</h3>
+                                            <p className="text-slate-400 text-sm sm:text-base mb-4 sm:mb-6 line-clamp-3 md:line-clamp-none">{project.description}</p>
 
-                                            <div className="flex flex-wrap gap-2 mb-8">
+                                            <div className="flex flex-wrap gap-2 mb-4 sm:mb-8">
                                                 {(project.tags || []).map((tag) => (
                                                     <span key={tag.name} className={`px-2 py-1 text-xs font-medium rounded ${tag.color}`}>{tag.name}</span>
                                                 ))}
                                             </div>
 
-                                            <div className="flex flex-wrap gap-3">
-                                                <Link to={project.caseStudyLink} className="inline-flex items-center text-indigo-400 font-semibold hover:text-indigo-300 transition-colors group-hover:translate-x-1 duration-300">
+                                            <div className="flex flex-wrap gap-3 mt-auto">
+                                                <Link to={project.caseStudyLink} className="inline-flex items-center text-indigo-400 font-semibold hover:text-indigo-300 transition-colors group-hover:translate-x-1 duration-300 text-sm sm:text-base">
                                                     View Case Study
-                                                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <svg className="w-4 h-4 ml-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                                                     </svg>
                                                 </Link>

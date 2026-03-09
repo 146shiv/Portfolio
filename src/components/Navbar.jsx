@@ -22,7 +22,7 @@ const Navbar = () => {
                 <div className="flex items-center justify-between h-16">
                     <div className="flex-shrink-0 flex items-center">
                         <Link to="/" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-blue-400">
-                            JD
+                            Shivendra Yadav
                         </Link>
                     </div>
 

@@ -10,8 +10,8 @@ export const HERO_CONTENT = {
     headlineEnd: "Problem Solver",
     description: "MERN Stack Specialist | Java DSA | Backend Enthusiast. Building scalable, user-centric, and high-performance applications.",
     techStack: ['React', 'Node.js', 'TypeScript', 'MongoDB', 'AWS'],
-    resumeLink: "#",
-    githubLink: "#",
+    resumePdfUrl: "https://drive.google.com/uc?export=download&id=1KZ1UA8EbxgXvfMpDs7EryacvxU7Dz3TU",
+    githubLink: "https://github.com/146shiv",
 };
 
 export const EXPERTISE_CONTENT = {
@@ -66,8 +66,8 @@ export const PROJECTS = [
 ];
 
 export const SOCIAL_LINKS = [
-    { name: 'LinkedIn', url: '#', iconColor: 'text-blue-500' },
-    { name: 'GitHub', url: '#', iconColor: 'text-slate-200' },
-    { name: 'Twitter', url: '#', iconColor: 'text-sky-400' },
-    { name: 'Email', url: 'mailto:hello@example.com', iconColor: 'text-red-500' },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/shivendra-yadav-a48027284/', iconColor: 'text-blue-500', external: true },
+    { name: 'GitHub', url: 'https://github.com/146shiv', iconColor: 'text-slate-200', external: true },
+    { name: 'Twitter', url: '#', iconColor: 'text-sky-400', external: true },
+    { name: 'Email', url: 'mailto:shivendrayadav616@gmail.com', iconColor: 'text-red-500', external: false },
 ];
