@@ -84,6 +84,6 @@ export const PROJECTS = [
 export const SOCIAL_LINKS = [
     { name: 'LinkedIn', url: 'https://www.linkedin.com/in/shivendra-yadav-a48027284/', iconColor: 'text-blue-500', external: true },
     { name: 'GitHub', url: 'https://github.com/146shiv', iconColor: 'text-slate-200', external: true },
-    { name: 'Twitter', url: '#', iconColor: 'text-sky-400', external: true },
+    { name: 'Twitter', url: 'https://x.com/easyshiv432', iconColor: 'text-sky-400', external: true },
     { name: 'Email', url: 'mailto:shivendrayadav616@gmail.com', iconColor: 'text-red-500', external: false },
 ];

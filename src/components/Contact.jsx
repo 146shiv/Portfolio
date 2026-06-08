@@ -1,28 +1,100 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { SOCIAL_LINKS } from '../constants';
+
+const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
+const IFRAME_NAME = 'google-sheet-submit';
+
+// Hidden iframe avoids CORS — Google Apps Script redirects block fetch() on localhost
+const submitToGoogleSheet = (formData) =>
+    new Promise((resolve) => {
+        let iframe = document.getElementById(IFRAME_NAME);
+        if (!iframe) {
+            iframe = document.createElement('iframe');
+            iframe.id = IFRAME_NAME;
+            iframe.name = IFRAME_NAME;
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+        }
+
+        const hiddenForm = document.createElement('form');
+        hiddenForm.action = GOOGLE_SCRIPT_URL;
+        hiddenForm.method = 'GET';
+        hiddenForm.target = IFRAME_NAME;
+        hiddenForm.style.display = 'none';
+
+        Object.entries(formData).forEach(([key, value]) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = value;
+            hiddenForm.appendChild(input);
+        });
+
+        document.body.appendChild(hiddenForm);
+        hiddenForm.submit();
+        hiddenForm.remove();
+
+        setTimeout(resolve, 800);
+    });
 
 const Contact = () => {
     const [btnText, setBtnText] = useState('Send Message');
     const [disabled, setDisabled] = useState(false);
     const [btnClass, setBtnClass] = useState('bg-indigo-600 hover:bg-indigo-700 border-transparent');
 
-    const handleSubmit = (e) => {
+    const resetButton = useCallback((delay = 3000) => {
+        setTimeout(() => {
+            setBtnText('Send Message');
+            setDisabled(false);
+            setBtnClass('bg-indigo-600 hover:bg-indigo-700 border-transparent');
+        }, delay);
+    }, []);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const form = e.target;
+        if (form.website?.value) {
+            form.reset();
+            return;
+        }
+
+        if (!GOOGLE_SCRIPT_URL) {
+            if (import.meta.env.DEV) {
+                console.error(
+                    'Missing VITE_GOOGLE_SCRIPT_URL. Add it to your .env file and restart the dev server (npm run dev).'
+                );
+            }
+            setBtnText('Setup required');
+            setBtnClass('bg-red-600 border-red-500');
+            resetButton(5000);
+            return;
+        }
+
         setBtnText('Sending...');
         setDisabled(true);
 
-        setTimeout(() => {
+        const formData = {
+            name: form.name.value.trim(),
+            email: form.email.value.trim(),
+            message: form.message.value.trim(),
+        };
+
+        try {
+            await submitToGoogleSheet(formData);
+
             setBtnText('Message Sent!');
             setBtnClass('bg-green-600 border-green-500');
-
-            e.target.reset();
-
-            setTimeout(() => {
-                setBtnText('Send Message');
-                setDisabled(false);
-                setBtnClass('bg-indigo-600 hover:bg-indigo-700 border-transparent');
-            }, 3000);
-        }, 1500);
+            form.reset();
+        } catch (error) {
+            if (import.meta.env.DEV) {
+                console.error('Contact form submission failed:', error);
+            }
+            setBtnText('Failed — try again');
+            setBtnClass('bg-red-600 border-red-500');
+        } finally {
+            resetButton();
+        }
     };
 
     return (
@@ -36,20 +108,27 @@ const Contact = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    {/* Contact Form */}
                     <div className="bg-slate-800/80 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-slate-700 shadow-xl">
                         <form onSubmit={handleSubmit} className="space-y-6">
+                            <input
+                                type="text"
+                                name="website"
+                                tabIndex={-1}
+                                autoComplete="off"
+                                className="hidden"
+                                aria-hidden="true"
+                            />
                             <div>
                                 <label htmlFor="name" className="block text-sm font-medium text-slate-400 mb-2">Name</label>
-                                <input type="text" id="name" required className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-slate-600 transition-all outline-none" placeholder="Your Name" />
+                                <input type="text" id="name" name="name" required className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-slate-600 transition-all outline-none" placeholder="Your Name" />
                             </div>
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-slate-400 mb-2">Email</label>
-                                <input type="email" id="email" required className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-slate-600 transition-all outline-none" placeholder="hello@example.com" />
+                                <input type="email" id="email" name="email" required className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-slate-600 transition-all outline-none" placeholder="hello@example.com" />
                             </div>
                             <div>
                                 <label htmlFor="message" className="block text-sm font-medium text-slate-400 mb-2">Message</label>
-                                <textarea id="message" rows="4" required className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-slate-600 transition-all outline-none resize-none" placeholder="Tell me about your project..."></textarea>
+                                <textarea id="message" name="message" rows="4" required className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-slate-600 transition-all outline-none resize-none" placeholder="Tell me about your project..."></textarea>
                             </div>
                             <button type="submit" disabled={disabled} className={`w-full py-3 px-6 rounded-lg text-white font-semibold transition-all duration-300 shadow-lg shadow-indigo-500/25 flex items-center justify-center gap-2 border ${btnClass}`}>
                                 {btnText}
@@ -60,7 +139,6 @@ const Contact = () => {
                         </form>
                     </div>
 
-                    {/* Socials & Info */}
                     <div className="flex flex-col justify-center space-y-8">
                         <div className="space-y-6">
                             <h3 className="text-xl font-semibold text-white">Connect with me</h3>
