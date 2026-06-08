@@ -3,7 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import ProjectDetails from './pages/ProjectDetails';
+import ReviewBo from './pages/ReviewBo';
+import AIChatbot from './pages/AIChatbot';
 import ProfileX from './pages/ProfileX';
 
 function App() {
@@ -12,7 +13,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/project-details" element={<ProjectDetails />} />
+        <Route path="/reviewbo" element={<ReviewBo />} />
+        <Route path="/ai-chatbot" element={<AIChatbot />} />
         <Route path="/profilex" element={<ProfileX />} />
       </Routes>
       <Footer />

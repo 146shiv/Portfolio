@@ -17,7 +17,7 @@ const Hero = () => {
                 <div className="space-y-4">
                     <div className="inline-block px-3 py-1 rounded-full bg-slate-800/50 border border-slate-700 text-xs font-semibold text-indigo-400 uppercase tracking-wider mb-2">Available for hire</div>
                     <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight">
-                        <span className="block text-slate-100">Backend Developer &</span>
+                        <span className="block text-slate-100">Full Stack Developer &</span>
                         <span className="block text-gradient mt-2">Problem Solver</span>
                     </h1>
                     <p className="mt-4 max-w-2xl mx-auto text-lg sm:text-xl text-slate-400">

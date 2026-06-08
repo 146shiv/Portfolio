@@ -35,6 +35,36 @@ export const EXPERTISE_CONTENT = {
 // Add new projects here – they will show in the slider automatically
 export const PROJECTS = [
     {
+        id: 'reviewbo',
+        title: "ReviewBo - AI Google Review Funnel",
+        description: "A SaaS platform that helps local businesses collect 5-star Google reviews via smart QR funnels, AI-generated review suggestions, negative review filtering, and live analytics.",
+        tags: [
+            { name: "SaaS", color: "text-emerald-300 bg-emerald-500/10" },
+            { name: "React", color: "text-indigo-300 bg-indigo-500/10" },
+            { name: "AI / Groq", color: "text-pink-300 bg-pink-500/10" },
+            { name: "Node.js", color: "text-green-300 bg-green-500/10" },
+        ],
+        caseStudyLink: "/reviewbo",
+        liveDemoUrl: "https://www.reviewbo.co.in/",
+        gradient: "from-emerald-900/40 to-slate-900",
+        placeholderLabel: "ReviewBo",
+    },
+    {
+        id: 'ai-chatbot',
+        title: "Document Chatbot - AI RAG Assistant",
+        description: "A conversational RAG application powered by Llama-3 and Pinecone vector database. Upload PDFs and chat with your documents via real-time WebSocket streaming.",
+        tags: [
+            { name: "RAG", color: "text-violet-300 bg-violet-500/10" },
+            { name: "LLM", color: "text-pink-300 bg-pink-500/10" },
+            { name: "Pinecone", color: "text-blue-300 bg-blue-500/10" },
+            { name: "WebSocket", color: "text-yellow-300 bg-yellow-500/10" },
+        ],
+        caseStudyLink: "/ai-chatbot",
+        liveDemoUrl: "https://chatbot-zeta-flax-37.vercel.app/",
+        gradient: "from-violet-900/40 to-slate-900",
+        placeholderLabel: "AI Chatbot",
+    },
+    {
         id: 'profilex',
         title: "ProfileX - Smart Business Card",
         description: "A MERN Stack application for creating and managing digital business cards with QR code integration, user authentication, and multi-card support.",
@@ -48,20 +78,6 @@ export const PROJECTS = [
         liveDemoUrl: "https://profile-x-frontend.vercel.app",
         gradient: "from-indigo-900/40 to-slate-900",
         placeholderLabel: "ProfileX",
-    },
-    {
-        id: 'saas-dashboard',
-        title: "SaaS Analytics Dashboard",
-        description: "A real-time analytics platform for SaaS businesses with dynamic charts, user management, and detailed reporting features.",
-        tags: [
-            { name: "React", color: "text-indigo-300 bg-indigo-500/10" },
-            { name: "Graphql", color: "text-pink-300 bg-pink-500/10" },
-            { name: "TypeScript", color: "text-blue-300 bg-blue-500/10" },
-        ],
-        caseStudyLink: "/project-details",
-        liveDemoUrl: null,
-        gradient: "from-slate-800/60 to-slate-900",
-        placeholderLabel: "SaaS Dashboard",
     },
 ];
 
